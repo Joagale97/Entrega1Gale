@@ -1,0 +1,69 @@
+{% extends "./base.html" %}
+
+{%block tittle%} Iphone Tech {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <h2>Celulares a Comprar</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registarcompra/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text"  id="txtMarca" name="txtMarca" class="form-control" placeholder="Marca" minlength="1" maxlength="50" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text"  id="txtModelo" name="txtModelo" class="form-control" placeholder="Modelo"  maxlength="58" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text"  id="txtSistema" name="txtSistema" class="form-control" placeholder="Sistema"  maxlength="58" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text"  id="numMemoria" name="numMemoria"  class="form-control"   min="1" max="9" value="Memoria en GB" required>
+                    <div class="form-group">
+                        <input type="text"  id="txtCompañia" name="txtCompañia" class="form-control" placeholder="Compañia" minlength="1" maxlength="50" required>
+                    </div>
+                       <input type="text"  id="numcreditos" name="numCantidad"  class="form-control"   min="1" max="9" value="Cantidad" required>
+                        <button type="submit" class="btn btn-success btn-block text-while">Guardar</button><div class="form-group">
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de compras</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-stiped">
+                <thead>
+                    <tr>
+                        <th class ="centrado">#</th>
+                        <th class ="centrado">Marca</th>
+                        <th class ="centrado">Modelo</th>
+                        <th class ="centrado">Sistema</th>
+                        <th class ="centrado">Memoria</th>
+                        <th class ="centrado">Compañia</th>
+                        <th class ="centrado">Cantidad</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in celulares %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{c.marca}}</td>
+                        <td>{{c.modelo}}</td>
+                        <td>{{c.sistema_operativo}}</td>
+                        <td>{{c.memoria_en_GB}}</td>
+                        <td>{{c.compañia}}</td>
+                        <td>{{c.cantidad}}</td>
+                        <td><a href="{% url 'editarCelular' c.id %}" class = "btn btn-info" >Editar</a></td>
+                        <td><a href="eliminacionCelular/{{c.id}}" class = "btn btn-danger btnEliminacion" >Eliminar</a></td>
+                    </tr>
+                    {% endfor %}   
+                </tbody>
+            </table>
+        </div>   
+    </div>
+</div>
+{% endblock %}
